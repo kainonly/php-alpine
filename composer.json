@@ -1,6 +1,6 @@
 {
-  "name": "kain/think-bit",
-  "description": "ThinkPHP Extend Lib",
+  "name": "kain/think-bit-mongo",
+  "description": "Think Bit Mongo Ext",
   "license": "MIT",
   "authors": [
     {
