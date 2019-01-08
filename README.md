@@ -1,2 +1,3 @@
-Think-Bit-Mongo
-============
+## PHP-Alpine
+
+PHP's minimalist custom image
