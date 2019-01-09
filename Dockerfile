@@ -3,8 +3,7 @@ FROM alpine:edge
 ENV VERSION 7.2.13
 
 RUN addgroup -g 82 -S nginx \
-    && adduser -u 82 -D -S -h /var/cache/nginx -s -G nginx nginx \
-    && sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
+    && adduser -u 82 -D -S -h /var/cache/nginx -s -G nginx nginx
 
 RUN apk add --no-cache \
     php7 \
