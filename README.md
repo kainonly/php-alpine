@@ -1,9 +1,6 @@
 ## PHP-Alpine
 
-PHP's minimalist custom image
-
-- size `130` mb
-- version `7.2.13`
+PHP's custom image
 
 Docker Pull Command
 
@@ -17,14 +14,14 @@ Set docker-compose
 version: '3'
 services:
   php:
-    image: kainonly/php-alpine:7.2.13
+    image: kainonly/php-alpine:7.3.1
     restart: always
     volumes:
-      - ./website:/website
+      - ./website:/var/www/html
     ports:
       - 9000:9000
 ```
 
 volumes
 
-- `/website` Virtual directory
+- `/var/www/html` Virtual directory
