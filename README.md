@@ -11,7 +11,7 @@ docker pull kainonly/php-alpine
 Set docker-compose
 
 ```yaml
-version: '3'
+version: '3.7'
 services:
   php:
     image: kainonly/php-alpine:7.3.1
