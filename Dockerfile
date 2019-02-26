@@ -35,6 +35,7 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
     bz2 \
     zip \
     soap \
+    sockets \
     exif \
     gmp \
     bcmath \
