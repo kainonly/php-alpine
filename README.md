@@ -5,7 +5,7 @@ PHP's custom image
 Docker Pull Command
 
 ```shell
-docker pull kainonly/php-alpine
+docker pull kainonly/php-alpine:7.3.2
 ```
 
 Set docker-compose
@@ -14,7 +14,7 @@ Set docker-compose
 version: '3.7'
 services:
   php:
-    image: kainonly/php-alpine:7.3.1
+    image: kainonly/php-alpine:7.3.2
     restart: always
     volumes:
       - ./website:/var/www/html
