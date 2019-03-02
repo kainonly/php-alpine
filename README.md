@@ -1,11 +1,9 @@
 ## PHP-Alpine
 
-PHP's custom image
-
 Docker Pull Command
 
 ```shell
-docker pull kainonly/php-alpine:7.3.2
+docker pull kainonly/php-alpine
 ```
 
 Set docker-compose
@@ -14,14 +12,15 @@ Set docker-compose
 version: '3.7'
 services:
   php:
-    image: kainonly/php-alpine:7.3.2
+    image: kainonly/php-alpine
     restart: always
     volumes:
-      - ./website:/website
-    ports:
-      - 9000:9000
+      - ./php/www.conf:/usr/local/etc/php-fpm.d/www.conf
+      - ./php/php.ini:/usr/local/lib/php.ini
+      - /home/website:/website
 ```
 
-volumes
-
+- `/usr/local/etc/php-fpm.d/` extra config
+- `/usr/local/lib/php.ini` php.ini
 - `/website` Virtual directory
+- `9000` php-fpm listen port
