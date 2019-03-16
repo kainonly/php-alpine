@@ -1,5 +1,7 @@
 FROM php:fpm-alpine
 
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
+
 RUN apk add --no-cache \
     freetype \
     libjpeg-turbo \
@@ -9,6 +11,7 @@ RUN apk add --no-cache \
     bzip2 \
     libzip \
     libxml2 \
+    libpq \
     gmp \
     enchant \
     libxslt \
@@ -24,6 +27,7 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
     bzip2-dev \
     libzip-dev \
     libxml2-dev \
+    postgresql-dev \
     gmp-dev \
     enchant-dev \
     libxslt-dev \
@@ -45,6 +49,8 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
     xsl \
     mysqli \
     pdo_mysql \
+    pgsql \
+    pdo_pgsql \
     opcache \
     \
     && docker-php-ext-configure gd --with-freetype-dir --with-jpeg-dir --with-png-dir --with-webp-dir --with-xpm-dir \ 
