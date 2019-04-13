@@ -47,8 +47,6 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
     xsl \
     mysqli \
     pdo_mysql \
-    pgsql \
-    pdo_pgsql \
     opcache \
     \
     && docker-php-ext-configure gd --with-freetype-dir --with-jpeg-dir --with-png-dir --with-webp-dir --with-xpm-dir \ 
