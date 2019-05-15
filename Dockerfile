@@ -1,4 +1,4 @@
-FROM php:fpm-alpine
+FROM php:5.6-fpm-alpine
 
 RUN apk add --no-cache \
     freetype \
@@ -41,6 +41,7 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
     enchant \
     xmlrpc \
     xsl \
+    mysql \
     mysqli \
     pdo_mysql \
     opcache \
