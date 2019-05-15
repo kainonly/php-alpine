@@ -23,6 +23,7 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
     bzip2-dev \
     libzip-dev \
     libxml2-dev \
+    postgresql-dev \
     gmp-dev \
     enchant-dev \
     libxslt-dev \
@@ -48,4 +49,6 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
     && docker-php-ext-configure gd --with-freetype-dir --with-jpeg-dir --with-png-dir --with-webp-dir --with-xpm-dir \ 
     && docker-php-ext-install gd \
     \
+    && pecl install redis mongodb msgpack \
+    && docker-php-ext-enable redis mongodb msgpack \
     && apk del .build-deps
