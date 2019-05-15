@@ -9,11 +9,9 @@ RUN apk add --no-cache \
     bzip2 \
     libzip \
     libxml2 \
-    libpq \
     gmp \
     enchant \
-    libxslt \
-    imagemagick
+    libxslt
 
 RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
     \
@@ -25,11 +23,9 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
     bzip2-dev \
     libzip-dev \
     libxml2-dev \
-    postgresql-dev \
     gmp-dev \
     enchant-dev \
     libxslt-dev \
-    imagemagick-dev \
     \
     && docker-php-ext-install \
     \
@@ -52,6 +48,4 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
     && docker-php-ext-configure gd --with-freetype-dir --with-jpeg-dir --with-png-dir --with-webp-dir --with-xpm-dir \ 
     && docker-php-ext-install gd \
     \
-    && pecl install redis mongodb msgpack imagick \
-    && docker-php-ext-enable redis mongodb msgpack imagick \
     && apk del .build-deps
