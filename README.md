@@ -1,6 +1,6 @@
-## PHP Alpine
+# PHP Alpine
 
-The php-fpm service Docker Image containing PHP Common Extensions
+The PHP FPM Service Docker Image
 
 ![MicroBadger Size](https://img.shields.io/microbadger/image-size/kainonly/php-alpine.svg?style=flat-square)
 ![MicroBadger Layers](https://img.shields.io/microbadger/layers/kainonly/php-alpine.svg?style=flat-square)
@@ -12,9 +12,9 @@ The php-fpm service Docker Image containing PHP Common Extensions
 docker pull kainonly/php-alpine
 ```
 
-Set docker-compose
+## Docker Compose
 
-```yaml
+```yml
 version: '3.7'
 services:
   php:
@@ -26,12 +26,11 @@ services:
       - /home/website:/website
 ```
 
-- `/usr/local/etc/php-fpm.d/` extra config
+- `/usr/local/etc/php-fpm.d/` Extra Config
 - `/usr/local/lib/php.ini` php.ini
-- `/website` Virtual directory
-- `9000` php-fpm listen port
+- `/website` work directory
 
-Version >= 7.0 Extensions:
+## PHP Extensions
 
 - calendar
 - bz2
@@ -47,28 +46,10 @@ Version >= 7.0 Extensions:
 - xsl
 - mysqli
 - pdo_mysql
+- pgsql
+- pdo_pgsql
 - opcache
 - gd
 - redis
 - mongodb
 - msgpack
-
-Version 5.x Extensions:
-
-- calendar
-- bz2
-- zip
-- soap
-- sockets
-- iconv
-- exif
-- gmp
-- bcmath
-- enchant
-- xmlrpc
-- xsl
-- mysql
-- mysqli
-- pdo_mysql
-- opcache
-- gd

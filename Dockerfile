@@ -1,4 +1,4 @@
-FROM php:fpm-alpine
+FROM php:7.3.6-fpm-alpine
 
 RUN apk add --no-cache \
     freetype \
@@ -9,6 +9,7 @@ RUN apk add --no-cache \
     bzip2 \
     libzip \
     libxml2 \
+    libpq \
     gmp \
     enchant \
     libxslt
@@ -44,6 +45,8 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
     xsl \
     mysqli \
     pdo_mysql \
+    pgsql \
+    pdo_pgsql \
     opcache \
     \
     && docker-php-ext-configure gd --with-freetype-dir --with-jpeg-dir --with-png-dir --with-webp-dir --with-xpm-dir \ 
