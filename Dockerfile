@@ -1,6 +1,7 @@
 FROM php:7.3.6-fpm-alpine
 
-RUN apk add --no-cache \
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories \
+    && apk add --no-cache \
     freetype \
     libjpeg-turbo \
     libpng \
@@ -55,3 +56,14 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
     && pecl install redis mongodb msgpack \
     && docker-php-ext-enable redis mongodb msgpack \
     && apk del .build-deps
+
+RUN rm -rf /var/www/html \
+    && mkdir -p /website \
+    && chown www-data:www-data /website \
+    && chmod 777 /website \
+    && { \
+		echo '[global]'; \
+		echo 'daemonize = no'; \
+	} | tee /usr/local/etc/php-fpm.d/zz-docker.conf
+
+WORKDIR /website
