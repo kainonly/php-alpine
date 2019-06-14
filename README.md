@@ -12,7 +12,7 @@ The PHP FPM Service Docker Image
 docker pull kainonly/php-alpine
 ```
 
-> PHP Extensions: calendar. bz2. zip. soap. sockets. iconv. exif. gmp. bcmath. enchant. xmlrpc. xsl. mysqli. pdo_mysql. pgsql. pdo_pgsql. opcache. gd. redis. mongodb. msgpack.
+> **PHP Extensions:** calendar. bz2. zip. soap. sockets. iconv. exif. gmp. bcmath. enchant. xmlrpc. xsl. mysqli. pdo_mysql. pgsql. pdo_pgsql. opcache. gd. redis. mongodb. msgpack.
 
 ## Docker Compose
 
@@ -109,7 +109,7 @@ extension=msgpack.so
 extension=mongodb.so
 ```
 
-## ex.Laravel Deployment
+## Laravel Deployment
 
 create `./nginx/vhost/developer.com/site.conf`
 
@@ -156,14 +156,14 @@ server {
   error_page 404 /index.php;
 
   location ~ \.php$ {
-      fastcgi_pass unix:/var/run/php-fpm.sock;
-      fastcgi_index index.php;
-      fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
-      include fastcgi_params;
+    fastcgi_pass unix:/var/run/php-fpm.sock;
+    fastcgi_index index.php;
+    fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+    include fastcgi_params;
   }
 
   location ~ /\.(?!well-known).* {
-      deny all;
+    deny all;
   }
 }
 ```
