@@ -1,7 +1,6 @@
 FROM php:7.3.6-fpm-alpine
 
-RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories \
-    && apk add --no-cache \
+RUN apk add --no-cache \
     freetype \
     libjpeg-turbo \
     libpng \
