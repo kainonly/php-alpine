@@ -30,13 +30,13 @@ services:
       kernel.shmall: 4294967296
       net.core.somaxconn: 65535
     volumes:
+      - ./php/php.ini:/usr/local/etc/php/php.ini
       - ./php/www.conf:/usr/local/etc/php-fpm.d/www.conf
-      - ./php/php.ini:/usr/local/lib/php.ini
       - /home/website:/website
 ```
 
+- `/usr/local/etc/php/php.ini` PHP INI
 - `/usr/local/etc/php-fpm.d/` Extra Config
-- `/usr/local/lib/php.ini` php.ini
 - `/website` work directory
 
 ## With Nginx Docker Compose
@@ -82,13 +82,16 @@ services:
       kernel.shmmax: 68719476736
       kernel.shmall: 4294967296
       net.core.somaxconn: 65535
+    devices: 
+      - hugepages:/dev/hugepages
     volumes:
       - socket:/var/run
+      - ./php/php.ini:/usr/local/etc/php/php.ini
       - ./php/www.conf:/usr/local/etc/php-fpm.d/www.conf
-      - ./php/php.ini:/usr/local/lib/php.ini
       - /website:/website
 
 volumes: 
+  hugepages:
   socket:
 ```
 
@@ -99,14 +102,42 @@ www.conf
 ```conf
 listen = /var/run/php-fpm.sock
 listen.mode = 0666
+
+pm = static
+pm.max_children = 100
+pm.max_requests = 10240
+rlimit_files = 65535
 ```
 
 php.ini
 
 ```ini
-extension=redis.so
-extension=msgpack.so
-extension=mongodb.so
+engine = On
+short_open_tag = Off
+realpath_cache_size = 2M
+max_execution_time = 86400
+memory_limit = 256M
+error_reporting = 0
+display_errors = 0
+display_startup_errors = 0
+log_errors = 0
+default_charset = "UTF-8"
+
+[opcache]
+opcache.enable=1
+opcache.enable_cli=0
+opcache.memory_consumption=4096
+opcache.interned_strings_buffer=128
+opcache.max_accelerated_files=1000000
+opcache.validate_timestamps=0
+opcache.revalidate_freq=60
+opcache.save_comments=1
+opcache.optimization_level=-1
+opcache.fast_shutdown=0
+opcache.huge_code_pages=1
+
+[curl]
+curl.cainfo = /usr/local/etc/php/cacert.pem
 ```
 
 ## Laravel Deployment
