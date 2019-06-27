@@ -29,6 +29,7 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
     gmp \
     bcmath \
     enchant \
+    socket \
     mysqli \
     pdo_mysql \
     opcache \
