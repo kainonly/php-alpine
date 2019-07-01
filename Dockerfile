@@ -5,6 +5,7 @@ RUN apk add --no-cache \
     libjpeg-turbo \
     libpng \
     bzip2 \
+    libzip \
     libxml2 \
     gmp \
     enchant
@@ -15,6 +16,7 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
     libjpeg-turbo-dev \
     libpng-dev \
     bzip2-dev \
+    libzip-dev \
     libxml2-dev \
     gmp-dev \
     enchant-dev \
@@ -23,6 +25,7 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
     \
     calendar \
     bz2 \
+    zip \
     soap \
     iconv \
     exif \
