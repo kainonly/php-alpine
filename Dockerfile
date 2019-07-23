@@ -40,8 +40,8 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
     && docker-php-ext-configure gd --with-freetype-dir --with-jpeg-dir --with-png-dir \ 
     && docker-php-ext-install gd \
     \
-    && pecl install redis msgpack \
-    && docker-php-ext-enable redis msgpack \
+    && pecl install redis msgpack mongodb \
+    && docker-php-ext-enable redis msgpack mongodb \
     && apk del .build-deps
 
 RUN rm -rf /var/www/html \
