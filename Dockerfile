@@ -8,7 +8,9 @@ RUN apk add --no-cache \
     libzip \
     libxml2 \
     gmp \
-    enchant
+    enchant \
+    openssl \
+    openssl-dev
 
 RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
     \
