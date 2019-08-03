@@ -22,13 +22,6 @@ services:
   php:
     image: kainonly/php-alpine
     restart: always
-    privileged: true
-    sysctls:
-      kernel.msgmnb: 65536
-      kernel.msgmax: 65536
-      kernel.shmmax: 68719476736
-      kernel.shmall: 4294967296
-      net.core.somaxconn: 65535
     volumes:
       - ./php/php.ini:/usr/local/etc/php/php.ini
       - ./php/www.conf:/usr/local/etc/php-fpm.d/www.conf
@@ -47,22 +40,6 @@ services:
   nginx:
     image: kainonly/nginx-alpine
     restart: always
-    privileged: true
-    sysctls:
-      net.ipv4.ip_forward: 0
-      net.ipv4.conf.default.rp_filter: 1
-      net.ipv4.conf.default.accept_source_route: 0
-      net.ipv4.tcp_syncookies: 1
-      kernel.msgmnb: 65536
-      kernel.msgmax: 65536
-      kernel.shmmax: 68719476736
-      kernel.shmall: 4294967296
-      net.core.somaxconn: 65535
-      net.ipv4.tcp_synack_retries: 1
-      net.ipv4.tcp_syn_retries: 1
-      net.ipv4.tcp_fin_timeout: 1
-      net.ipv4.tcp_keepalive_time: 30
-      net.ipv4.ip_local_port_range: 1024 65000
     volumes:
       - socket:/var/run
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
@@ -75,15 +52,6 @@ services:
   php:
     image: kainonly/php-alpine
     restart: always
-    privileged: true
-    sysctls:
-      kernel.msgmnb: 65536
-      kernel.msgmax: 65536
-      kernel.shmmax: 68719476736
-      kernel.shmall: 4294967296
-      net.core.somaxconn: 65535
-    devices: 
-      - hugepages:/dev/hugepages
     volumes:
       - socket:/var/run
       - ./php/php.ini:/usr/local/etc/php/php.ini
@@ -91,7 +59,6 @@ services:
       - /website:/website
 
 volumes: 
-  hugepages:
   socket:
 ```
 
