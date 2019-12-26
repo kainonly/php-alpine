@@ -43,8 +43,8 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \ 
     && docker-php-ext-install -j$(nproc) gd \
     \
-    && pecl install redis \
-    && docker-php-ext-enable redis \
+    && pecl install redis msgpack \
+    && docker-php-ext-enable redis msgpack \
     && apk del .build-deps
 
 RUN rm -rf /var/www/html \
