@@ -1,4 +1,4 @@
-FROM php:7.4.1-fpm-alpine
+FROM php:7.4.2-fpm-alpine
 
 RUN apk add --no-cache \
     freetype \
@@ -29,6 +29,7 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
     calendar \
     bz2 \
     zip \
+    pcntl \
     soap \
     iconv \
     exif \
