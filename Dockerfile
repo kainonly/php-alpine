@@ -1,4 +1,4 @@
-FROM php:7.4.2-fpm-alpine
+FROM php:7.4.3-fpm-alpine
 
 RUN apk add --no-cache \
     freetype \
@@ -9,10 +9,18 @@ RUN apk add --no-cache \
     libxml2 \
     gmp \
     enchant \
+    zlib \
     openssl
 
 RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
     \
+    linux-headers \
+    make \
+    automake \
+    autoconf \
+    gcc \
+    g++ \
+    zlib-dev \
     freetype-dev \
     libjpeg-turbo-dev \
     libpng-dev \
@@ -44,8 +52,8 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \ 
     && docker-php-ext-install -j$(nproc) gd \
     \
-    && pecl install redis msgpack \
-    && docker-php-ext-enable redis msgpack \
+    && pecl install redis msgpack grpc protobuf \
+    && docker-php-ext-enable redis msgpack grpc protobuf  \
     && apk del .build-deps
 
 RUN rm -rf /var/www/html \
