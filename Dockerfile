@@ -1,4 +1,4 @@
-FROM php:5.6-fpm-alpine
+FROM php:5.5-fpm-alpine
 
 RUN apk add --no-cache \
     freetype \
@@ -6,8 +6,8 @@ RUN apk add --no-cache \
     libpng \
     libwebp \
     libxpm \
+    libbz2 \
     bzip2 \
-    libzip \
     libxml2 \
     gmp \
     enchant \
@@ -21,7 +21,6 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
     libwebp-dev \
     libxpm-dev \
     bzip2-dev \
-    libzip-dev \
     libxml2-dev \
     gmp-dev \
     enchant-dev \
@@ -31,7 +30,6 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
     \
     calendar \
     bz2 \
-    zip \
     soap \
     sockets \
     iconv \
