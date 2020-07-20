@@ -10,7 +10,8 @@ RUN apk add --no-cache \
     gmp \
     zlib \
     openssl \
-    yaml
+    yaml \
+    grpc
 
 RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
     \
