@@ -1,60 +1,55 @@
-FROM php:7.4.12-fpm-alpine
+FROM php:7.0.33-fpm-alpine
+
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
 
 RUN apk add --no-cache \
     freetype \
     libjpeg-turbo \
     libpng \
+    libwebp \
+    libxpm \
     bzip2 \
     libzip \
     libxml2 \
     gmp \
-    zlib \
-    openssl \
-    yaml \
-    grpc \
-    libssh2
+    enchant \
+    libxslt
 
 RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
     \
-    linux-headers \
-    make \
-    automake \
-    autoconf \
-    gcc \
-    g++ \
-    zlib-dev \
     freetype-dev \
     libjpeg-turbo-dev \
     libpng-dev \
+    libwebp-dev \
+    libxpm-dev \
     bzip2-dev \
     libzip-dev \
     libxml2-dev \
     gmp-dev \
-    openssl-dev \
-    yaml-dev \
-    libssh2-dev \
+    enchant-dev \
+    libxslt-dev \
     \
     && docker-php-ext-install \
     \
     calendar \
     bz2 \
     zip \
-    pcntl \
     soap \
+    sockets \
     iconv \
     exif \
     gmp \
     bcmath \
-    sockets \
+    enchant \
+    xmlrpc \
+    xsl \
     mysqli \
     pdo_mysql \
     opcache \
     \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg \ 
-    && docker-php-ext-install -j$(nproc) gd \
+    && docker-php-ext-configure gd --with-freetype-dir --with-jpeg-dir --with-png-dir --with-webp-dir --with-xpm-dir \
+    && docker-php-ext-install gd \
     \
-    && pecl install redis msgpack grpc protobuf ssh2-1.2 \
-    && docker-php-ext-enable redis msgpack grpc protobuf ssh2 \
     && apk del .build-deps
 
 RUN rm -rf /var/www/html \
