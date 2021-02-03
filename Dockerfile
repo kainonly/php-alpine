@@ -1,4 +1,4 @@
-FROM php:7.4.14-fpm-alpine
+FROM php:8.0.1-fpm-alpine
 
 RUN apk add --no-cache \
     freetype \
@@ -11,7 +11,6 @@ RUN apk add --no-cache \
     zlib \
     openssl \
     yaml \
-    grpc \
     libssh2
 
 RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
@@ -53,8 +52,8 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \ 
     && docker-php-ext-install -j$(nproc) gd \
     \
-    && pecl install redis msgpack grpc protobuf ssh2-1.2 \
-    && docker-php-ext-enable redis msgpack grpc protobuf ssh2 \
+    && pecl install redis msgpack ssh2-1.2 \
+    && docker-php-ext-enable redis msgpack ssh2 \
     && apk del .build-deps
 
 RUN rm -rf /var/www/html \
