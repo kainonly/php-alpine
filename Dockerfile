@@ -13,7 +13,8 @@ RUN apk add --no-cache \
     libxml2 \
     gmp \
     enchant \
-    libxslt
+    libxslt \
+    libmcrypt
 
 RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
     \
@@ -27,6 +28,7 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
     gmp-dev \
     enchant-dev \
     libxslt-dev \
+    libmcrypt-dev \
     \
     && docker-php-ext-install \
     \
@@ -38,6 +40,7 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
     exif \
     gmp \
     bcmath \
+    mcrypt \
     enchant \
     xmlrpc \
     xsl \
@@ -48,6 +51,8 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
     \
     && docker-php-ext-configure gd --with-freetype-dir --with-jpeg-dir --with-png-dir --with-webp-dir --with-xpm-dir \ 
     && docker-php-ext-install gd \
+    && pecl install redis-4.3.0 \
+    && docker-php-ext-enable redis \
     \
     && apk del .build-deps
 
