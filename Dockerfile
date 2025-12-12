@@ -1,4 +1,17 @@
-FROM php:7.4.33-fpm
+# syntax=docker/dockerfile:1
+
+ARG TARGETPLATFORM
+ARG TARGETOS
+ARG TARGETARCH
+
+FROM --platform=$TARGETPLATFORM php:7.4.33-fpm
+
+ARG TARGETPLATFORM
+ARG TARGETOS
+ARG TARGETARCH
+
+# Helpful log line to confirm the resolved platform during multi-arch builds
+RUN echo "Building for platform: ${TARGETPLATFORM:-unknown} (OS: ${TARGETOS:-unknown}, Arch: ${TARGETARCH:-unknown})"
 
 RUN sed -i 's/deb.debian.org/mirrors.aliyun.com/g' /etc/apt/sources.list \
     && sed -i 's/security.debian.org/mirrors.aliyun.com/g' /etc/apt/sources.list
