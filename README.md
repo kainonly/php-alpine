@@ -18,8 +18,11 @@ in the Dockerfile ensures the correct base image and dependencies are selected
 when cross-compiling.
 
 ```shell
-docker buildx build --platform linux/arm64 \
-  -t kainonly/php-alpine:arm64 .
+docker buildx build \
+  --platform linux/arm64 \
+  -t php:7.4.33-arm64 \
+  --load \
+  .
 ```
 
 > **PHP Extensions:** calendar. bz2. zip. soap. sockets. iconv. exif. gmp. bcmath. enchant. xmlrpc. xsl. mysqli. pdo_mysql. pgsql. pdo_pgsql. opcache. gd. redis. mongodb. msgpack.

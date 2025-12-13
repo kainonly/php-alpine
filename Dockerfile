@@ -1,21 +1,6 @@
-# syntax=docker/dockerfile:1
+FROM php:7.4.33-fpm
 
-ARG TARGETPLATFORM
-ARG TARGETOS
-ARG TARGETARCH
-
-FROM --platform=$TARGETPLATFORM php:7.4.33-fpm
-
-ARG TARGETPLATFORM
-ARG TARGETOS
-ARG TARGETARCH
-
-# Helpful log line to confirm the resolved platform during multi-arch builds
-RUN echo "Building for platform: ${TARGETPLATFORM:-unknown} (OS: ${TARGETOS:-unknown}, Arch: ${TARGETARCH:-unknown})"
-
-RUN sed -i 's/deb.debian.org/mirrors.aliyun.com/g' /etc/apt/sources.list \
-    && sed -i 's/security.debian.org/mirrors.aliyun.com/g' /etc/apt/sources.list
-
+# ---------- runtime 依赖 ----------
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libfreetype6 \
     libjpeg62-turbo \
@@ -25,14 +10,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libxml2 \
     libgmp10 \
     zlib1g \
-    libssl1.1 \
     libyaml-0-2 \
     libssh2-1 \
+    ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
+# ---------- build 依赖 ----------
 RUN apt-get update && apt-get install -y --no-install-recommends \
     $PHPIZE_DEPS \
-    linux-libc-dev \
     make \
     automake \
     autoconf \
@@ -51,36 +36,37 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libssh2-1-dev \
     \
     && docker-php-ext-install \
-    \
-    calendar \
-    bz2 \
-    zip \
-    pcntl \
-    soap \
-    iconv \
-    exif \
-    gmp \
-    bcmath \
-    sockets \
-    mysqli \
-    pdo_mysql \
-    opcache \
+        calendar \
+        bz2 \
+        zip \
+        pcntl \
+        soap \
+        iconv \
+        exif \
+        gmp \
+        bcmath \
+        sockets \
+        mysqli \
+        pdo_mysql \
+        opcache \
     \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) gd \
     \
     && pecl install redis msgpack ssh2-1.2 \
     && docker-php-ext-enable redis msgpack ssh2 \
+    \
     && apt-get purge -y --auto-remove $PHPIZE_DEPS \
     && rm -rf /var/lib/apt/lists/*
 
+# ---------- runtime layout ----------
 RUN rm -rf /var/www/html \
     && mkdir -p /website \
     && chown www-data:www-data /website \
     && chmod 777 /website \
     && { \
-    echo '[global]'; \
-    echo 'daemonize = no'; \
-    } | tee /usr/local/etc/php-fpm.d/zz-docker.conf
+        echo '[global]'; \
+        echo 'daemonize = no'; \
+    } > /usr/local/etc/php-fpm.d/zz-docker.conf
 
 WORKDIR /website
