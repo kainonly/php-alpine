@@ -1,7 +1,12 @@
-FROM php:7.4.33-fpm
+FROM php:7.4.33-fpm-buster
+
+# Debian Buster 已 EOL，切换到归档源
+RUN echo "deb http://archive.debian.org/debian buster main" > /etc/apt/sources.list \
+    && echo "deb http://archive.debian.org/debian-security buster/updates main" >> /etc/apt/sources.list
 
 # ---------- runtime 依赖 ----------
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
     libfreetype6 \
     libjpeg62-turbo \
     libpng16-16 \
@@ -36,19 +41,19 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libssh2-1-dev \
     \
     && docker-php-ext-install \
-        calendar \
-        bz2 \
-        zip \
-        pcntl \
-        soap \
-        iconv \
-        exif \
-        gmp \
-        bcmath \
-        sockets \
-        mysqli \
-        pdo_mysql \
-        opcache \
+    calendar \
+    bz2 \
+    zip \
+    pcntl \
+    soap \
+    iconv \
+    exif \
+    gmp \
+    bcmath \
+    sockets \
+    mysqli \
+    pdo_mysql \
+    opcache \
     \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) gd \
@@ -65,8 +70,8 @@ RUN rm -rf /var/www/html \
     && chown www-data:www-data /website \
     && chmod 777 /website \
     && { \
-        echo '[global]'; \
-        echo 'daemonize = no'; \
+    echo '[global]'; \
+    echo 'daemonize = no'; \
     } > /usr/local/etc/php-fpm.d/zz-docker.conf
 
 WORKDIR /website
